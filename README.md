@@ -60,6 +60,7 @@ SRS 07 – Software Updates: The device shall be capable of receiving firmware u
 
 
 ## 2.
+# Understanding the Starter Code
 
 ### 1. InitializeSerialConsole() function
 `InitializeSerialConsole()` initializes the UART serial communication at 115200 baud 8N1. In this function:
@@ -68,38 +69,59 @@ SRS 07 – Software Updates: The device shall be capable of receiving firmware u
 - Both are circular buffer data structures that efficiently manage incoming and outgoing data in a ring structure
 
 ### 2. Circular buffer initialization
-`cbufRx` and `cbufTx` are initialized using the `circular_buffer_init()` function defined in `circular_buffer.c`. This library provides the implementation for all circular buffer operations including initialization, push, and pop.
+`cbufRx` and `cbufTx` are initialized using the `circular_buf_init()` function defined in `circular_buffer.c`. This library provides the implementation for all circular buffer operations including initialization, push, and pop.
 
 ### 3. Character storage arrays
 The character arrays where RX and TX characters are stored:
-- `rxBuffer` - stores received characters within the `cbufRx` structure
-- `txBuffer` - stores characters to be transmitted within the `cbufTx` structure
-- Both arrays likely have sizes defined as constants in the header files (typically 64-256 bytes)
+- `rxCharacterBuffer` - stores received characters within the `cbufRx` structure
+- `txCharacterBuffer` - stores characters to be transmitted within the `cbufTx` structure
+- Both arrays have sizes defined as constants: `RX_BUFFER_SIZE` and `TX_BUFFER_SIZE`, which are both 512 bytes
 
 ### 4. UART interrupt definitions
-UART interrupts are defined in the SERCOM (Serial Communication Interface) configuration section, specifically in the functions that register callbacks for UART events using the ASF (Atmel Software Framework) library functions.
+UART interrupts are defined in SerialConsole.c's `configure_usart_callbacks()` function where callbacks are registered for UART events:
+```c
+usart_register_callback(&usart_instance, usart_write_callback, USART_CALLBACK_BUFFER_TRANSMITTED);
+usart_register_callback(&usart_instance, usart_read_callback, USART_CALLBACK_BUFFER_RECEIVED);
+```
 
 ### 5. Callback functions
-- **RX callback**: `UART_RX_callback()` - called when a character is received
-- **TX callback**: `UART_TX_callback()` - called when a character has been sent and the hardware is ready for the next character
+- **RX callback**: `usart_read_callback()` - called when a character is received
+- **TX callback**: `usart_write_callback()` - called when a character has been sent and the hardware is ready for the next character
 
 ### 6. Callback operations
-- **RX callback**: When a character is received, the interrupt triggers this callback, which reads the character from the UART hardware register and adds it to the `cbufRx` using `circular_buffer_push()`. The callback also echoes the character back to the sender.
-- **TX callback**: When the UART has finished sending a character, this callback is triggered. It pops the next character from `cbufTx` using `circular_buffer_pop()` and loads it into the UART transmit register if available, or disables the TX interrupt if the buffer is empty.
+- **usart_read_callback**: When a character is received, the interrupt triggers this callback. It should read the character from `latestRx` (which was filled by the UART hardware), add it to the `cbufRx` circular buffer using `circular_buf_put()`, and then start a new read operation with `usart_read_buffer_job()`. This callback is marked as incomplete in the code.
+
+- **usart_write_callback**: When the UART has finished sending a character, this callback is triggered. It pops the next character from `cbufTx` using `circular_buf_get()` and loads it into `latestTx`, then initiates transmission of this character if the buffer is not empty. If the buffer is empty, no further transmission is started.
 
 ### 7. UART Receive Flow Diagram
-<img width="740" alt="截屏2025-03-20 18 27 57" src="https://github.com/user-attachments/assets/5d8f68d4-94c1-4349-a424-4ca8b8d1a279" />
 
-
-
+```
+User types character on terminal → 
+UART hardware receives character → 
+UART RX interrupt triggered → 
+usart_read_callback() executes → 
+Character read from latestRx → 
+circular_buf_put(cbufRx, receivedChar) → 
+Character stored in rxBuffer within cbufRx → 
+Start new read with usart_read_buffer_job() →
+SerialConsoleReadCharacter() can retrieve character from cbufRx
+```
 
 ### 8. UART Transmit Flow Diagram
-<img width="727" alt="截屏2025-03-20 18 32 24" src="https://github.com/user-attachments/assets/53c080b1-392a-49e8-ad1d-75ebcdb67530" />
 
-
+```
+Program calls SerialConsoleWriteString(string) → 
+Characters pushed to cbufTx using circular_buf_put() → 
+First character popped from cbufTx → 
+Character loaded into latestTx → 
+usart_write_buffer_job() sends character → 
+Character transmitted by UART hardware → 
+TX complete interrupt triggered → 
+usart_write_callback() executes → 
+Next character popped from cbufTx → 
+Process repeats until cbufTx empty → 
+Characters appear on PC terminal (Teraterm)
+```
 
 ### 9. startTasks() function
-The `startTasks()` function in main.c creates and initializes FreeRTOS tasks. It likely starts 2-3 threads:
-- A main application task that handles the primary logic
-- A communication handling task that processes messages
-- Possibly a system monitoring task
+ the `startTasks()` function in main.c is responsible for initializing and starting FreeRTOS tasks. While we don't have the exact implementation, it appears to start at least one thread - the Command Console Task (`vCommandConsoleTask`), which handles user commands through the CLI interface. 
