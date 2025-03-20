@@ -61,40 +61,44 @@ SRS 07 – Software Updates: The device shall be capable of receiving firmware u
 
 ## 2.
 
-### 1. **Function of `InitializeSerialConsole()`**
-   This function sets up the UART communication by configuring UART settings such as baud rate, parity, and stop bits. It likely initializes the UART hardware to work at 115200 baud with 8 data bits, no parity bit, and one stop bit (8N1 configuration).
+### 1. InitializeSerialConsole() function
+`InitializeSerialConsole()` initializes the UART serial communication at 115200 baud 8N1. In this function:
+- `cbufRx` is a circular buffer for receiving characters from UART
+- `cbufTx` is a circular buffer for transmitting characters via UART
+- Both are circular buffer data structures that efficiently manage incoming and outgoing data in a ring structure
 
-### 2. **`cbufRx` and `cbufTx` Explanation**
-   - **cbufRx** and **cbufTx** are likely structures used for handling circular buffers for UART communication.
-   - **Type of data structure:** These are circular (or ring) buffers, which are linear data structures that follow a first-in-first-out (FIFO) method but are implemented in a circular way to efficiently use buffer space, allowing the buffer to wrap around to the beginning when it reaches the end.
+### 2. Circular buffer initialization
+`cbufRx` and `cbufTx` are initialized using the `circular_buffer_init()` function defined in `circular_buffer.c`. This library provides the implementation for all circular buffer operations including initialization, push, and pop.
 
-### 3. **Initialization of `cbufRx` and `cbufTx`**
-   These buffers are initialized in the `InitializeSerialConsole()` function. The exact initialization would typically involve setting the head and tail pointers to the start of the buffer, and defining the size of the buffer.
+### 3. Character storage arrays
+The character arrays where RX and TX characters are stored:
+- `rxBuffer` - stores received characters within the `cbufRx` structure
+- `txBuffer` - stores characters to be transmitted within the `cbufTx` structure
+- Both arrays likely have sizes defined as constants in the header files (typically 64-256 bytes)
 
-### 4. **Library Definition**
-   The definitions for `cbufRx` and `cbufTx` likely come from a circular buffer library, often found in a file like `circular_buffer.c` or within the UART driver code itself, possibly named `uart_driver.c`.
+### 4. UART interrupt definitions
+UART interrupts are defined in the SERCOM (Serial Communication Interface) configuration section, specifically in the functions that register callbacks for UART events using the ASF (Atmel Software Framework) library functions.
 
-### 5. **Storage Arrays for RX and TX Characters**
-   The character arrays where the received (RX) and transmitted (TX) characters are stored are typically defined within the circular buffer structure. The names and sizes of these arrays can vary but are typically defined as part of the circular buffer structure initialization, such as `rxBuffer[SIZE]` and `txBuffer[SIZE]`, where `SIZE` is the defined buffer size.
+### 5. Callback functions
+- **RX callback**: `UART_RX_callback()` - called when a character is received
+- **TX callback**: `UART_TX_callback()` - called when a character has been sent and the hardware is ready for the next character
 
-### 6. **UART Interrupts Definition**
-   The interrupts for UART character reception and transmission are defined within the UART configuration settings in the MCU setup code, possibly in `uart_driver.c`.
+### 6. Callback operations
+- **RX callback**: When a character is received, the interrupt triggers this callback, which reads the character from the UART hardware register and adds it to the `cbufRx` using `circular_buffer_push()`. The callback also echoes the character back to the sender.
+- **TX callback**: When the UART has finished sending a character, this callback is triggered. It pops the next character from `cbufTx` using `circular_buffer_pop()` and loads it into the UART transmit register if available, or disables the TX interrupt if the buffer is empty.
 
-### 7. **Callback Functions**
-   - **RX callback:** This function is triggered when a character is received via UART. It typically reads the character from the UART data register and adds it to `cbufRx`.
-   - **TX callback:** This function is activated when a UART transmit operation completes. It checks if there is more data to send in `cbufTx` and, if so, initiates the transmission of the next character.
-
-### 8. **Callback Function Operations**
-   - **RX Callback:** Adds received characters to `cbufRx`, handling overflow if necessary.
-   - **TX Callback:** Sends characters from `cbufTx`, managing buffer underflow conditions.
-
-### 9. **Diagrams for Program Flow**
-   For the diagrams illustrating the program flows for UART receive and transmit processes, it would involve the sequence of functions and buffer operations starting from character entry to buffer storage and from buffer retrieval to display. Diagrams can be sketched or described based on your specific starter code implementation.
-
-### 10. **Function of `startStasks()` in `main.c`**
-   This function initializes and starts FreeRTOS tasks. The exact number and nature of tasks started depend on your specific application, but typically it would start tasks for handling UART communication, possibly other sensor interfaces or logic depending on the project requirements.
+### 7. UART Receive Flow Diagram
+<img width="740" alt="截屏2025-03-20 18 27 57" src="https://github.com/user-attachments/assets/5d8f68d4-94c1-4349-a424-4ca8b8d1a279" />
 
 
 
 
+### 8. UART Transmit Flow Diagram
 
+
+
+### 9. startTasks() function
+The `startTasks()` function in main.c creates and initializes FreeRTOS tasks. It likely starts 2-3 threads:
+- A main application task that handles the primary logic
+- A communication handling task that processes messages
+- Possibly a system monitoring task
