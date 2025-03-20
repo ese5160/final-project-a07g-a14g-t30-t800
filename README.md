@@ -50,4 +50,12 @@ SRS 06 – Log Data: The system shall log all sensor data with timestamps in a l
 
 SRS 07 – Software Updates: The device shall be capable of receiving firmware updates over-the-air via Wi-Fi, without requiring physical access to the hardware.
 
+#### 2.
+
+<img width="921" alt="截屏2025-03-20 17 49 56" src="https://github.com/user-attachments/assets/42200a46-89d0-4b21-ac4f-74787285a055" />
+
+#### 3.
+<img width="782" alt="截屏2025-03-20 18 07 36" src="https://github.com/user-attachments/assets/05e90916-866a-459b-9007-c6274aef5404" />
+
+
 
