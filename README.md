@@ -14,7 +14,7 @@ This codebase will be used first in A07G Exploring the CLI, then will be expande
   * Ctrl+Shift+V will render the README.md (maybe not the images though)
 
 ## 1.
-#### 1.
+### 1.
 HRS 01
 The system shall use a SAMW25 microcontroller with integrated Wi-Fi for real-time data transmission and remote monitoring.
 
@@ -50,14 +50,52 @@ SRS 06 – Log Data: The system shall log all sensor data with timestamps in a l
 
 SRS 07 – Software Updates: The device shall be capable of receiving firmware updates over-the-air via Wi-Fi, without requiring physical access to the hardware.
 
-#### 2.
+### 2.
 
 <img width="921" alt="截屏2025-03-20 17 49 56" src="https://github.com/user-attachments/assets/42200a46-89d0-4b21-ac4f-74787285a055" />
 
-#### 3.
+### 3.
 <img width="782" alt="截屏2025-03-20 18 07 36" src="https://github.com/user-attachments/assets/05e90916-866a-459b-9007-c6274aef5404" />
 
+
+
 ## 2.
+To address your questions comprehensively, we'll go through the functional breakdown of the UART interface in the context of the SAMW25 starter code, typically utilizing Microchip Studio and FreeRTOS:
+
+### 1. **Function of `InitializeSerialConsole()`**
+   This function sets up the UART communication by configuring UART settings such as baud rate, parity, and stop bits. It likely initializes the UART hardware to work at 115200 baud with 8 data bits, no parity bit, and one stop bit (8N1 configuration).
+
+### 2. **`cbufRx` and `cbufTx` Explanation**
+   - **cbufRx** and **cbufTx** are likely structures used for handling circular buffers for UART communication.
+   - **Type of data structure:** These are circular (or ring) buffers, which are linear data structures that follow a first-in-first-out (FIFO) method but are implemented in a circular way to efficiently use buffer space, allowing the buffer to wrap around to the beginning when it reaches the end.
+
+### 3. **Initialization of `cbufRx` and `cbufTx`**
+   These buffers are initialized in the `InitializeSerialConsole()` function. The exact initialization would typically involve setting the head and tail pointers to the start of the buffer, and defining the size of the buffer.
+
+### 4. **Library Definition**
+   The definitions for `cbufRx` and `cbufTx` likely come from a circular buffer library, often found in a file like `circular_buffer.c` or within the UART driver code itself, possibly named `uart_driver.c`.
+
+### 5. **Storage Arrays for RX and TX Characters**
+   The character arrays where the received (RX) and transmitted (TX) characters are stored are typically defined within the circular buffer structure. The names and sizes of these arrays can vary but are typically defined as part of the circular buffer structure initialization, such as `rxBuffer[SIZE]` and `txBuffer[SIZE]`, where `SIZE` is the defined buffer size.
+
+### 6. **UART Interrupts Definition**
+   The interrupts for UART character reception and transmission are defined within the UART configuration settings in the MCU setup code, possibly in `uart_driver.c`.
+
+### 7. **Callback Functions**
+   - **RX callback:** This function is triggered when a character is received via UART. It typically reads the character from the UART data register and adds it to `cbufRx`.
+   - **TX callback:** This function is activated when a UART transmit operation completes. It checks if there is more data to send in `cbufTx` and, if so, initiates the transmission of the next character.
+
+### 8. **Callback Function Operations**
+   - **RX Callback:** Adds received characters to `cbufRx`, handling overflow if necessary.
+   - **TX Callback:** Sends characters from `cbufTx`, managing buffer underflow conditions.
+
+### 9. **Diagrams for Program Flow**
+   For the diagrams illustrating the program flows for UART receive and transmit processes, it would involve the sequence of functions and buffer operations starting from character entry to buffer storage and from buffer retrieval to display. Diagrams can be sketched or described based on your specific starter code implementation.
+
+### 10. **Function of `startStasks()` in `main.c`**
+   This function initializes and starts FreeRTOS tasks. The exact number and nature of tasks started depend on your specific application, but typically it would start tasks for handling UART communication, possibly other sensor interfaces or logic depending on the project requirements.
+
+
 
 
 
