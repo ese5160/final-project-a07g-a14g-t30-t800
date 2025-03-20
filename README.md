@@ -60,7 +60,6 @@ SRS 07 – Software Updates: The device shall be capable of receiving firmware u
 
 
 ## 2.
-To address your questions comprehensively, we'll go through the functional breakdown of the UART interface in the context of the SAMW25 starter code, typically utilizing Microchip Studio and FreeRTOS:
 
 ### 1. **Function of `InitializeSerialConsole()`**
    This function sets up the UART communication by configuring UART settings such as baud rate, parity, and stop bits. It likely initializes the UART hardware to work at 115200 baud with 8 data bits, no parity bit, and one stop bit (8N1 configuration).
