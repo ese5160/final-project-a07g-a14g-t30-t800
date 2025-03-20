@@ -94,6 +94,7 @@ UART interrupts are defined in the SERCOM (Serial Communication Interface) confi
 
 
 ### 8. UART Transmit Flow Diagram
+<img width="727" alt="截屏2025-03-20 18 32 24" src="https://github.com/user-attachments/assets/53c080b1-392a-49e8-ad1d-75ebcdb67530" />
 
 
 
