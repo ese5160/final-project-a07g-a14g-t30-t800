@@ -13,7 +13,7 @@ This codebase will be used first in A07G Exploring the CLI, then will be expande
   * Code formatting and extension recommendation files come with this repository.
   * Ctrl+Shift+V will render the README.md (maybe not the images though)
 
-
+### 1.
 #### 1.
 HRS 01
 The system shall use a SAMW25 microcontroller with integrated Wi-Fi for real-time data transmission and remote monitoring.
