@@ -1,8 +1,7 @@
 #include "DebugLogger.h"
 
 int main(void) {
-    setLogLevel(LOG_INFO_LVL); // 设置日志级别为INFO
-
+    setLogLevel(LOG_INFO_LVL); 
     LogMessage(LOG_INFO_LVL, "System is booting...\r\n");
     LogMessage(LOG_DEBUG_LVL, "Initializing system components...\r\n");
 
