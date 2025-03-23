@@ -214,10 +214,9 @@ void vCommandConsoleTask(void *pvParameters)
  * @details		STUDENTS TO COMPLETE.
  * @note
  *****************************************************************************/
-static void FreeRTOS_read(char *character)
-{
-    // ToDo: Complete this function
-    vTaskSuspend(NULL); // We suspend ourselves. Please remove this when doing your code
+static void FreeRTOS_read(char *character) {
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY); // Clear on exit, wait indefinitely
+    circular_buf_get(cbufRx, (uint8_t *)character);
 }
 
 /******************************************************************************
