@@ -1,5 +1,5 @@
 #include "DebugLogger.h"
-#include "SerialConsole.h" // 假设存在用于输出的SerialConsole模块
+#include "SerialConsole.h" 
 #include <stdio.h>
 
 static eDebugLogLevels currentLogLevel = LOG_INFO_LVL;
