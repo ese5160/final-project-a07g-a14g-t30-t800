@@ -231,12 +231,14 @@ static void configure_usart_callbacks(void)
 		 Students to fill out. Please note that the code here is dummy code. It is only used to show you how some functions work.
  * @note
  *****************************************************************************/
-
 void usart_read_callback(struct usart_module *const usart_module) {
-    circular_buf_put(cbufRx, latestRx); // Store the received character
-    xSemaphoreGiveFromISR(xRxSemaphore, NULL); // Signal that a character is received
-    usart_read_buffer_job(usart_module, (uint8_t *)&latestRx, 1); // Continue reading
+    circular_buf_put(cbufRx, latestRx);
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    vTaskNotifyGiveFromISR(xHandle, &xHigherPriorityTaskWoken);
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    usart_read_buffer_job(usart_module, (uint8_t *)&latestRx, 1);
 }
+
 
 /**************************************************************************/ 
 /**
