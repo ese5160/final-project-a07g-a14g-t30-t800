@@ -1,11 +1,11 @@
 #include "DebugLogger.h"
+#include "SerialConsole.h" // 假设存在用于输出的SerialConsole模块
 #include <stdio.h>
-#include <stdarg.h>
 
 static eDebugLogLevels currentLogLevel = LOG_INFO_LVL;
 
-void setLogLevel(eDebugLogLevels level) {
-    currentLogLevel = level;
+void setLogLevel(eDebugLogLevels debugLevel) {
+    currentLogLevel = debugLevel;
 }
 
 eDebugLogLevels getLogLevel(void) {
@@ -13,15 +13,15 @@ eDebugLogLevels getLogLevel(void) {
 }
 
 void LogMessage(eDebugLogLevels level, const char *format, ...) {
-    if (level < getLogLevel()) {
+    if (level < currentLogLevel) {
         return;
     }
 
+    char buffer[256];
     va_list args;
     va_start(args, format);
-    char buffer[256]; // Adjust size as needed
     vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);
 
-    printf("%s", buffer); // Replace this with your specific serial output function if necessary
+    SerialConsoleWriteString(buffer);
 }
