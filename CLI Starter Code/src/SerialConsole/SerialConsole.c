@@ -232,10 +232,10 @@ static void configure_usart_callbacks(void)
  * @note
  *****************************************************************************/
 
-void usart_read_callback(struct usart_module *const usart_module)
-{
-    circular_buf_put(cbufRx, latestRx); // Put the received character into the RX buffer
-    usart_read_buffer_job(usart_module, (uint8_t *)&latestRx, 1); // Continue reading the next character
+void usart_read_callback(struct usart_module *const usart_module) {
+    circular_buf_put(cbufRx, latestRx); // Store the received character
+    xSemaphoreGiveFromISR(xRxSemaphore, NULL); // Signal that a character is received
+    usart_read_buffer_job(usart_module, (uint8_t *)&latestRx, 1); // Continue reading
 }
 
 /**************************************************************************/ 
