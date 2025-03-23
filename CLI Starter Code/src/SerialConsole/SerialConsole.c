@@ -149,10 +149,23 @@ void setLogLevel(enum eDebugLogLevels debugLevel)
 /**
  * @brief Logs a message at the specified debug level.
  */
+
+
+
+
 void LogMessage(enum eDebugLogLevels level, const char *format, ...)
 {
-    // Todo: Implement Debug Logger
-	// More detailed descriptions are in header file
+    if (level < currentDebugLevel) {
+        return; // Do not log messages below the current debug level
+    }
+
+    char buffer[256]; // Temporary buffer to hold the constructed message
+    va_list args;
+    va_start(args, format);
+    vsnprintf(buffer, sizeof(buffer), format, args);
+    va_end(args);
+
+    SerialConsoleWriteString(buffer); // Use the existing function to write the log to UART
 }
 
 /*
@@ -218,9 +231,11 @@ static void configure_usart_callbacks(void)
 		 Students to fill out. Please note that the code here is dummy code. It is only used to show you how some functions work.
  * @note
  *****************************************************************************/
+
 void usart_read_callback(struct usart_module *const usart_module)
 {
-	// ToDo: Complete this function 
+    circular_buf_put(cbufRx, latestRx); // Put the received character into the RX buffer
+    usart_read_buffer_job(usart_module, (uint8_t *)&latestRx, 1); // Continue reading the next character
 }
 
 /**************************************************************************/ 
