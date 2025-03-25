@@ -118,3 +118,7 @@ Characters appear on PC terminal (Teraterm)
 
 ### 9. startTasks() function
  the `startTasks()` function in main.c is responsible for initializing and starting FreeRTOS tasks. While we don't have the exact implementation, it appears to start at least one thread - the Command Console Task (`vCommandConsoleTask`), which handles user commands through the CLI interface. 
+ 
+
+
+## 3. Debug Logger Module
