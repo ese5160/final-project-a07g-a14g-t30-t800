@@ -174,3 +174,11 @@ We can directly attach the D0 of the logic analyzer to the PB10 on the SAMW25 MC
 
 ## 5. Complete the CLI
 Committed to the repo as [CLI code](https://github.com/ese5160/final-project-a07g-a14g-t30-t800/tree/main/CLI%20Starter%20Code).
+
+ 
+
+## 6. Add CLI commands
+### 1. CLI code
+Committed to the repo as [CLI code](https://github.com/ese5160/final-project-a07g-a14g-t30-t800/tree/main/CLI%20Starter%20Code).
+### 2. Video
+Link to the video:
