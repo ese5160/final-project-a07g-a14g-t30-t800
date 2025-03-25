@@ -166,3 +166,6 @@ We can directly attach the D0 of the logic analyzer to the PB10 on the SAMW25 MC
 
 ### 3. Decoded Message
 ![Decode](https://github.com/ese5160/final-project-a07g-a14g-t30-t800/blob/main/ag07_files/images/ag07_decode.png)
+
+### 4. Capture File
+[Capture File](https://github.com/ese5160/final-project-a07g-a14g-t30-t800/blob/main/ag07_files/Session%201.sal)
