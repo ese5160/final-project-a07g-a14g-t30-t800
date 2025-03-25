@@ -122,7 +122,7 @@ Characters appear on PC terminal (Teraterm)
 
 
 ## 3. Debug Logger Module
-Debug Logger Module commited to the github repo as debugeer_logger.h and debugger_logger.c.
+Debug Logger Module commited to the github repo as [debugeer_logger.h](https://github.com/ese5160/final-project-a07g-a14g-t30-t800/blob/main/debugeer_logger.h) and [debugger_logger.c](https://github.com/ese5160/final-project-a07g-a14g-t30-t800/blob/main/debugger_logger.c).
  
 
 
