@@ -54,9 +54,7 @@ SRS 07 – Software Updates: The device shall be capable of receiving firmware u
 
 
 
-## 2. 
-# Understanding the Starter Code
-
+## 2. Understanding the Starter Code
 ### 1. InitializeSerialConsole() function
 `InitializeSerialConsole()` initializes the UART serial communication at 115200 baud 8N1. In this function:
 - `cbufRx` is a circular buffer for receiving characters from UART
