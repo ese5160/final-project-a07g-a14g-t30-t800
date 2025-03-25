@@ -9,7 +9,6 @@
  * 				It initializes an UART channel and uses it to receive command from the user
  *				as well as print debug information.
  *
- 
  *				The code in this file will:
  *				--Initialize a SERCOM port (SERCOM # ) to be an UART channel operating at 115200 baud/second, 8N1
  *				--Register callbacks for the device to read and write characters asycnhronously as required by the CLI
