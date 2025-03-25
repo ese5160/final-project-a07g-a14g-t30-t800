@@ -122,3 +122,4 @@ Characters appear on PC terminal (Teraterm)
 
 
 ## 3. Debug Logger Module
+Debug Logger Module commited to the github repo as debugeer_logger.h and debugger_logger.c.
