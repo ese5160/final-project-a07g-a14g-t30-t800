@@ -181,4 +181,4 @@ Committed to the repo as [CLI code](https://github.com/ese5160/final-project-a07
 ### 1. CLI code
 Committed to the repo as [CLI code](https://github.com/ese5160/final-project-a07g-a14g-t30-t800/tree/main/CLI%20Starter%20Code).
 ### 2. Video
-Link to the video:
+Link to the video:https://youtube.com/shorts/Wg1RultT-RU
