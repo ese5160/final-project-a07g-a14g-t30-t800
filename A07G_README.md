@@ -143,7 +143,7 @@ config_usart.pinmux_pad3 = EDBG_CDC_SERCOM_PINMUX_PAD3;
 
 We must attach the logic analyzer to the UART transmit (TX) and optionally receive (RX) nets used by the SAMW25 microcontroller. PB10 is the TX and PB11 is the RX. Connect PB 10 to D0 on the logic analyzer and gnd to the gnd of the logic analyzer.  
 
-**2. Where on the circuit board can you attach / solder to?** 
+**2. Where on the circuit board can you attach / solder to?**   
 We can directly attach the D0 of the logic analyzer to the PB10 on the SAMW25 MCU through the header. And connect the GND of the logic analyzer to any GND on the MCU.
 
 **3. What are critical settings for the logic analyzer?** 
@@ -160,3 +160,9 @@ We can directly attach the D0 of the logic analyzer to the PB10 on the SAMW25 MC
 | Trigger Condition    | D0 → falling edge (UART start bit)          |
 | Sampling Rate        | 25 MS/s (at least 4x–10x baud rate)         |
 | Analyzer             | Async Serial                                |
+
+### 2. Hardware Connections
+![Connection](https://github.com/ese5160/final-project-a07g-a14g-t30-t800/blob/main/ag07_files/images/ag07_connection.jpg)
+
+### 3. Decoded Message
+![Decode](https://github.com/ese5160/final-project-a07g-a14g-t30-t800/blob/main/ag07_files/images/ag07_decode.png)
