@@ -123,3 +123,9 @@ Characters appear on PC terminal (Teraterm)
 
 ## 3. Debug Logger Module
 Debug Logger Module commited to the github repo as debugeer_logger.h and debugger_logger.c.
+ 
+
+
+## 4. Wiretap the convo
+### 1. Answers to questions
+**1.** we must attach the logic analyzer to the UART transmit (TX) and optionally receive (RX) nets used by the SAMW25 microcontroller. PB10 is the TX and PB11 is the RX. Connect PB 10 to D0 on the logic analyzer and gnd to the gnd of the logic analyzer.
