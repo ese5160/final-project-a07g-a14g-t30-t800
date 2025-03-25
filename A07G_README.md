@@ -128,4 +128,14 @@ Debug Logger Module commited to the github repo as debugeer_logger.h and debugge
 
 ## 4. Wiretap the convo
 ### 1. Answers to questions
-**1.** we must attach the logic analyzer to the UART transmit (TX) and optionally receive (RX) nets used by the SAMW25 microcontroller. PB10 is the TX and PB11 is the RX. Connect PB 10 to D0 on the logic analyzer and gnd to the gnd of the logic analyzer.
+**1.** 
+```
+config_usart.mux_setting = EDBG_CDC_SERCOM_MUX_SETTING;
+config_usart.pinmux_pad0 = EDBG_CDC_SERCOM_PINMUX_PAD0;
+config_usart.pinmux_pad1 = EDBG_CDC_SERCOM_PINMUX_PAD1;
+config_usart.pinmux_pad2 = EDBG_CDC_SERCOM_PINMUX_PAD2;
+config_usart.pinmux_pad3 = EDBG_CDC_SERCOM_PINMUX_PAD3;
+```
+We must attach the logic analyzer to the UART transmit (TX) and optionally receive (RX) nets used by the SAMW25 microcontroller. PB10 is the TX and PB11 is the RX. Connect PB 10 to D0 on the logic analyzer and gnd to the gnd of the logic analyzer.  
+
+**2.** We can directly attach the D0 of the logic analyzer to the PB10 on the SAMW25 MCU through the header. And connect the GND of the logic analyzer to any GND on the MCU.
