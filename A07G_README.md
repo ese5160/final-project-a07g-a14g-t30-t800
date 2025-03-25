@@ -1,10 +1,10 @@
 # a07g-exploring-the-CLI
 
-* Team Number:
-* Team Name:
-* Team Members:
-* GitHub Repository URL:
-* Description of test hardware: (development boards, sensors, actuators, laptop + OS, etc)
+* Team Number: 30
+* Team Name: T800
+* Team Members: Jinrong Liu & Gengzhi Zhu
+* GitHub Repository URL: https://github.com/ese5160/final-project-a07g-a14g-t30-t800
+* Description of test hardware: (development boards, sensors, actuators, laptop + OS, etc): SAMD21 Microcontroller, WINC 1500 WiFi Chip, Laptop
 
 ## 1. Software Architecture
 ### 1. HRS & SRS
