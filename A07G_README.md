@@ -6,8 +6,9 @@
 * GitHub Repository URL:
 * Description of test hardware: (development boards, sensors, actuators, laptop + OS, etc)
 
-## 1.
-### 1.
+## 1. Software Architecture
+### 1. HRS & SRS
+** HRS **
 HRS 01
 The system shall use a SAMW25 microcontroller with integrated Wi-Fi for real-time data transmission and remote monitoring.
 
