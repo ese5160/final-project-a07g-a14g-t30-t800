@@ -136,6 +136,10 @@ config_usart.pinmux_pad1 = EDBG_CDC_SERCOM_PINMUX_PAD1;
 config_usart.pinmux_pad2 = EDBG_CDC_SERCOM_PINMUX_PAD2;
 config_usart.pinmux_pad3 = EDBG_CDC_SERCOM_PINMUX_PAD3;
 ```
+| **Net** | **Function**             | **Microcontroller Pin** | **SERCOM PAD** |
+|--------|---------------------------|--------------------------|----------------|
+| PB10   | UART TX from SAMW25       | Pin 38                   | SERCOM4 PAD2   |
+| PB11   | UART RX to SAMW25         | Pin 39                   | SERCOM4 PAD3   |
 We must attach the logic analyzer to the UART transmit (TX) and optionally receive (RX) nets used by the SAMW25 microcontroller. PB10 is the TX and PB11 is the RX. Connect PB 10 to D0 on the logic analyzer and gnd to the gnd of the logic analyzer.  
 
 **2.** We can directly attach the D0 of the logic analyzer to the PB10 on the SAMW25 MCU through the header. And connect the GND of the logic analyzer to any GND on the MCU.
