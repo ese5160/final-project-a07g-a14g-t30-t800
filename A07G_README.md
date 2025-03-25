@@ -8,7 +8,7 @@
 
 ## 1. Software Architecture
 ### 1. HRS & SRS
-** HRS **
+**HSR**
 HRS 01
 The system shall use a SAMW25 microcontroller with integrated Wi-Fi for real-time data transmission and remote monitoring.
 
@@ -30,6 +30,7 @@ The motors and valves should be mounted on a stable overhead track to facilitate
 HRS 07
 The system should support USB external power supply: The system should be capable of being powered via a USB interface during code programming or when continuous operation is needed. Additionally, the system should also support standalone operation powered by a lithium-ion battery, ensuring continuous functionality when no external power source is available.
 
+**SRS**
 SRS 01 – Environmental Monitoring: Each sensor module shall measure the concentration of CO2, ambient temperature, and humidity within its designated zone. Measurements of CO2 and temperature shall be taken every 30 seconds +/- 5 seconds; humidity shall be measured every 60 seconds +/- 10 seconds.
 
 SRS 02 – Actuator Control: Based on sensor inputs, the system shall control actuators to adjust environmental conditions. If CO2 levels exceed pre-defined thresholds appropriate for the crops in any zone, ventilation windows shall be opened automatically within 5 seconds of detection. If humidity drops below the set threshold, irrigation shall be activated within 10 seconds.
